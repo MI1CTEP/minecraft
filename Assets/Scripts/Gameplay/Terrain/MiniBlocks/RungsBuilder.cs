@@ -1,0 +1,152 @@
+using UnityEngine;
+
+namespace MyGame.Gameplay.Terrain.MiniBlock
+{
+    public sealed class RungsBuilder
+    {
+        private readonly MiniBlocksController _controller;
+
+        public RungsBuilder(MiniBlocksController controller)
+        {
+            _controller = controller;
+        }
+
+        public void Build(Vector3 pointPostition, Vector3 normalPosition, Vector3Int id)
+        {
+            Vector3 positionInBlock;
+            if (normalPosition.x + normalPosition.y + normalPosition.z > 0)
+                positionInBlock = (pointPostition - Vector3Int.FloorToInt(pointPostition + normalPosition * 0.01f));
+            else
+                positionInBlock = (pointPostition - Vector3Int.FloorToInt(pointPostition - normalPosition * 0.01f));
+
+            if (normalPosition.x == -1) positionInBlock.x = 0.5f - positionInBlock.x;
+            else if (normalPosition.y == -1) positionInBlock.y = 0.5f - positionInBlock.y;
+            else if (normalPosition.z == -1) positionInBlock.z = 0.5f - positionInBlock.z;
+
+            Vector3Int posInt = Vector3Int.RoundToInt(positionInBlock * 200);
+
+            if (posInt.x == 0 && 200 - posInt.z > posInt.y && posInt.z > posInt.y ||
+                posInt.y == 0 && 200 - posInt.z > posInt.x && posInt.z > posInt.x)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+            }
+            else if (posInt.x == 100 && 200 - posInt.z > posInt.y && posInt.z > posInt.y ||
+                posInt.y == 0 && 200 - posInt.z <= posInt.x && posInt.z <= posInt.x)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+            else if (posInt.x == 0 && 200 - posInt.z <= posInt.y && posInt.z <= posInt.y ||
+                posInt.y == 100 && 200 - posInt.z > posInt.x && posInt.z > posInt.x)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+            else if (posInt.x == 100 && 200 - posInt.z <= posInt.y && posInt.z <= posInt.y ||
+                posInt.y == 100 && 200 - posInt.z <= posInt.x && posInt.z <= posInt.x)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+
+            else if (posInt.x == 0 && 200 - posInt.y > posInt.z && posInt.y > posInt.z ||
+                posInt.z == 0 && 200 - posInt.y > posInt.x && posInt.y > posInt.x)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+            }
+            else if (posInt.x == 100 && 200 - posInt.y > posInt.z && posInt.y > posInt.z ||
+                posInt.z == 0 && 200 - posInt.y <= posInt.x && posInt.y <= posInt.x)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+            else if (posInt.x == 0 && 200 - posInt.y <= posInt.z && posInt.y <= posInt.z ||
+                posInt.z == 100 && 200 - posInt.y > posInt.x && posInt.y > posInt.x)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+            else if (posInt.x == 100 && 200 - posInt.y <= posInt.z && posInt.y <= posInt.z ||
+                posInt.z == 100 && 200 - posInt.y <= posInt.x && posInt.y <= posInt.x)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+
+            else if (posInt.y == 0 && 200 - posInt.x > posInt.z && posInt.x > posInt.z ||
+                posInt.z == 0 && 200 - posInt.x > posInt.y && posInt.x > posInt.y)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+            }
+            else if (posInt.y == 100 && 200 - posInt.x > posInt.z && posInt.x > posInt.z ||
+                posInt.z == 0 && 200 - posInt.x <= posInt.y && posInt.x <= posInt.y)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+            else if (posInt.y == 0 && 200 - posInt.x <= posInt.z && posInt.x <= posInt.z ||
+                posInt.z == 100 && 200 - posInt.x > posInt.y && posInt.x > posInt.y)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+            else if (posInt.y == 100 && 200 - posInt.x <= posInt.z && posInt.x <= posInt.z ||
+                posInt.z == 100 && 200 - posInt.x <= posInt.y && posInt.x <= posInt.y)
+            {
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0, 0.5f, 0.5f));
+                _controller.TryBuildMiniCube(id, new Vector3(0.5f, 0.5f, 0.5f));
+            }
+        }
+    }
+}
